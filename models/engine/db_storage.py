@@ -86,3 +86,13 @@ class DBStorage:
                 return objects[0]
             else:
                 return None
+
+    def count(self, cls=None):
+        ''' count the occurences given the class name '''
+        if cls:
+            return self.__session.query(cls).count()
+        else:
+            count = 0
+            for cls in [User, Place, State, City, Amenity, Review]:
+                count += self.__session.query(cls).count()
+            return count
