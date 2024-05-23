@@ -74,3 +74,15 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    # AirBnB version 3: method to retrieve
+    def get(self, cls, id):
+        ''' this is a method to retrieve based on class and id'''
+        if cls is None or id is None:
+            print("Add a class and id to retrieve")
+        else:
+            objects = self.__session.query(cls).filter_by(id=id).all()
+            if objects:
+                return objects[0]
+            else:
+                return None
