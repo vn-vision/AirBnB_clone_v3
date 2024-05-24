@@ -78,21 +78,18 @@ class DBStorage:
     # AirBnB version 3: method to retrieve
     def get(self, cls, id):
         ''' this is a method to retrieve based on class and id'''
-        if cls is None or id is None:
-            print("Add a class and id to retrieve")
+        objects = self.__session.query(cls).filter_by(id=id).all()
+        if objects:
+            return objects[0]
         else:
-            objects = self.__session.query(cls).filter_by(id=id).all()
-            if objects:
-                return objects[0]
-            else:
-                return None
+            return None
 
     def count(self, cls=None):
         ''' count the occurences given the class name '''
         if cls:
             return self.__session.query(cls).count()
         else:
-            count = 0
+            t_count = 0
             for cls in [User, Place, State, City, Amenity, Review]:
-                count += self.__session.query(cls).count()
-            return count
+                t_count += self.__session.query(cls).count()
+            return t_count
