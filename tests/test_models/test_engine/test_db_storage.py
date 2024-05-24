@@ -24,6 +24,32 @@ classes = {"Amenity": Amenity, "City": City, "Place": Place,
 
 
 class TestDBStorageDocs(unittest.TestCase):
+    ''' Addedd get and count and additional setup and teardown'''
+    def setUp(self):
+        """Set up test environment"""
+        self.storage = DBStorage()
+        self.state = State(name="California")
+        self.storage.new(self.state)
+        self.storage.save()
+
+    def tearDown(self):
+        """Tear down test environment"""
+        session = self.storage._DBStorage__session
+        session.query(State).delete()
+        session.commit()
+
+    def test_get(self):
+        """Test the get method"""
+        obj = self.storage.get(State, self.state.id)
+        self.assertEqual(obj, self.state)
+        self.assertIsNone(self.storage.get(State, "non-existent-id"))
+
+    def test_count(self):
+        """Test the count method"""
+        self.assertEqual(self.storage.count(), 1)
+        self.assertEqual(self.storage.count(State), 1)
+        self.assertEqual(self.storage.count("NonExistentClass"), 0)
+
     """Tests to check the documentation and style of DBStorage class"""
     @classmethod
     def setUpClass(cls):
