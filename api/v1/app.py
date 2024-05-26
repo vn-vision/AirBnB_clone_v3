@@ -29,5 +29,5 @@ if __name__ == "__main__":
     app.run(host=host, port=port, threaded=True)
 
 {
-    "error": "not found"
+    "error": "Not found"
 }
