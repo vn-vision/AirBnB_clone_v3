@@ -1,4 +1,4 @@
-# api/v1/views/places.py
+#!/usr/bin/python3
 
 from flask import Flask, jsonify, abort, request
 from models import storage
