@@ -8,7 +8,6 @@ from models.place import Place
 from models.city import City
 from models.user import User
 from models.state import State
-from models.amenity import Amenity
 from api.v1.views import app_views
 
 
@@ -94,6 +93,7 @@ def update_place(place_id):
     place.save()
     return jsonify(place.to_dict()), 200
 
+
 @app_views.route('/places_search', methods=['POST'], strict_slashes=False)
 def places_search():
     """Search for places based on provided JSON data."""
@@ -107,20 +107,17 @@ def places_search():
 
     places = []
 
-    # Retrieve places based on states
     for state_id in states:
         state = storage.get(State, state_id)
         if state:
             for city in state.cities:
                 places.extend(city.places)
 
-    # Retrieve places based on cities
     for city_id in cities:
         city = storage.get(City, city_id)
         if city:
             places.extend(city.places)
 
-    # Filter places based on amenities
     if amenities:
         filtered_places = []
         for place in places:
