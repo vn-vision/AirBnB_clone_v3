@@ -1,6 +1,7 @@
 #!/usr/bin/python3
-
-
+"""
+Flask route that returns json status response
+"""
 from flask import jsonify, abort, request
 from models import storage
 from models.place import Place
