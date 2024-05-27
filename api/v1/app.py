@@ -3,7 +3,7 @@
 AirBnB API: app
 '''
 
-from flask import Flask
+from flask import Flask, jsonify
 import os
 from models import storage
 from api.v1.views import app_views
@@ -19,6 +19,14 @@ app.register_blueprint(app_views)
 def trdown(exception):
     ''' clean up after use, close access to storage '''
     storage.close()
+
+
+@app.errorhandler(404)
+def not_found(error):
+    ''' error 404 '''
+    response = jsonify({"error": "Not found"})
+    response.status_code = 404
+    return response
 
 
 if __name__ == "__main__":
